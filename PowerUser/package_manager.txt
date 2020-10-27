@@ -1,0 +1,24 @@
+			*Package Manager*
+
+Windows:
+	Package Manager:
+		Chocolatey
+	Others Program:
+		SCCM
+		Puppet
+
+
+Install-Package -Name sysinternals
+Get-Package -name sysinternals
+uninstall-Package -Name sysinternals
+
+
+Linux:
+apt ---Advanced Packaging Tools
+
+source package
+cat /etc/apt/sources.list
+
+Personal Package Archive (PPA) is a software repository for uploading source packages to be built and published as an Advanced Packaging Tool (APT) repository by Launchpad.
+
+

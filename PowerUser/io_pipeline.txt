@@ -1,0 +1,30 @@
+			*IO Pipeline*
+
+
+
+=== IO & Pipeline
+
+echo mewaw > cat.txt
+cat cat.txt
+
+echo appendsometext >> cat.txt
+
+cat cat.txt | Select-String mew
+cat cat.txt | Select-String mew > matched.txt
+
+stderr:
+rm secure_file 2 > errors.txt
+
+0- stdin
+1- stdout
+2- stderr
+
+rm secure_file 2 > $null    ---$null means nothing. So there will be no existance of error. 
+
+Get-Help about_redirection  ---To learn more about $null
+
+
+
+ 
+
+

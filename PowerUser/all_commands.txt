@@ -1,0 +1,788 @@
+			*Navigation*
+
+
+=== Navigation
+
+pwd
+cd [Dir]
+cd .. 
+cd ..\[Previous Dir]
+cd ~
+
+
+
+
+=== Make Dir
+
+mkdir [New Dir Name]-- Shouldn't consist space.. 
+--Example
+	mkdir my_new_folder
+
+
+--if want space
+	mkdir 'my new folder'
+	mkdir my` new` folder
+
+
+
+
+
+=== Command History
+
+history
+
+-- Previous command
+#Tab
+
+clear
+
+
+
+
+
+
+=== Copying File & Dir
+
+cp [File] [Path to paste]
+cp *.extension [Path to paste]
+cp [Folder] [Path to paste] -Recursive -Verbose>(Optional)
+
+
+
+
+=== Moving & Renaming Files, Dir
+
+mv [File] [Path to move]
+mv *.extension [Folder Path to move]
+mv [File] [New Name]
+
+
+
+
+=== Removing Files & Directories
+
+rm / remove
+
+rm [File] -Force
+rm [Folder] -Recurse
+remove [File] -Force
+
+
+
+
+
+=== Display File Contents
+
+cat [File]
+more [File]
+cat [File] -Head n      {n- any number}
+cat [File] -Tail n
+
+
+In BASH-
+less [File] /pattern_to_match
+less [File] g ----moves to the begining of file
+less [File] G ----moves to the end of file
+less [File] q ----for quit
+
+
+
+
+=== Modifying Text Files
+
+start notepad++ [File]
+
+
+
+
+
+=== Some Advanced Commands
+
+ls		    ---for listing file
+Get-Help  [Command] ---Get Help
+Get-Alias [alias]   ---To see aliases
+Get-Alias ls        ---ls = Get-ChildItem
+Get-ChildItem [Folder]  
+
+
+Get-ChildItem [Folder] in cmd is `dir [Folder]`
+
+Get-Help used in PowerShell
+/? used in cmd
+
+	
+			
+
+
+
+			*Regex*
+
+
+
+=== Searching Within Files
+
+--for manual way, see video week1
+
+Select-String [pattern] [File]
+Select-String [pattern] *.extension
+
+
+
+
+=== Searching Within Folders
+
+ls [File] -Recurse -Filter [pattern]
+
+
+Example:
+	ls C:\Program Files\bin\win\Release\ -Recurse -Filter *.exe
+
+
+
+
+
+
+
+
+			*IO Pipeline*
+
+
+
+=== IO & Pipeline
+
+echo mewaw > cat.txt
+cat cat.txt
+
+echo appendsometext >> cat.txt
+
+cat cat.txt | Select-String mew
+cat cat.txt | Select-String mew > matched.txt
+
+stderr:
+rm secure_file 2 > errors.txt
+
+0- stdin
+1- stdout
+2- stderr
+
+rm secure_file 2 > $null    ---$null means nothing. So there will be no existance of error. 
+
+Get-Help about_redirection  ---To learn more about $null
+
+
+
+ 
+
+
+
+			*Users*
+
+
+
+=== Users, Administrator & Groups
+
+Standard User-- One who is given access to a machine but has restricted access to do things like install software or change certain settings.
+Administrator-- A user that has complete control over a machine.
+Groups       -- Parents Users & Child Users
+
+
+
+
+=== View User & Group Information
+
+--- Go to Computer Management
+User Access Control (UAC)-- A feature in Windows that prevents unauthorized changes to a system..
+
+
+Get-LocalUser
+Get-LocalGroup
+Get-LocalGroupMember Administrators
+
+
+Bash-
+
+Becoming Root:
+sudo su -
+cat /etc/sudoers/
+
+sudo:x:number:name  ---root user
+
+cat /etc/passwd/
+
+root:x:0:0:root:/root:/bin/bash
+
+
+
+
+=== Setting User Passwords
+
+net user [username] '[password]'
+net user [username] /logonpasswordchg:yes
+
+
+Bash--
+passwd [username]
+sudo passwd -e [username]   ---Make Password Expire
+
+
+
+=== Adding & Removing Users
+
+net user [username] * /add
+net user [username] /logonpasswordchg:yes
+net user [username] password /add /logonpasswordchg:yes
+
+
+net user [username] /del
+Remove-LocalUser [username]
+
+
+Bash--
+sudo useradd [username]
+sudo userdel [username]
+
+
+
+
+
+
+
+			*File Permission*
+
+
+=== File Permissions
+
+icacls [Folder\File]    ---F  = Full Control
+			---CI = Container Inherit
+			---OI = Object Inherit
+icacls /?               ---All Commands
+
+
+
+
+
+=== Modifying Permissions
+
+icacls [Folder\File] /grant '[userType]:(OI)(CI)(R)'   ---userType = Everyone | Specific User
+Example:	
+	icacls [Folder\File] /grant 'Authentication Users:(OI)(CI)(R)'
+
+
+icacls [Folder\File] /remove userType 
+Example:
+	icacls [Folder\File] /remove Everyone
+
+
+
+Bash--
+
+u--user
+g--group
+o--other
+
+chmod u+x  [File]
+chmod u-x  [File]
+chmod u+rx [File]
+chmod ugo+r [File]
+
+
+The numerical equivalent of rwx is:
+- 4 for read or r
+- 2 for write or w
+- 1 for execute or x
+
+
+chmod 754 [File]
+-rwxr-xr--
+
+rwx ---user
+r-x ---group
+r-- ---others
+
+change owner--
+sudo chown [username] [File]
+sudo chgrp [groupname] [File]
+
+
+
+
+=== Special Permissions
+
+-- file >> Properties >> Advance
+
+--Bash 
+
+chmod u+s  [File/Folder]
+chmod 4755 [File/Folder]
+chmod 2755 [File/Folder]
+chmod 1755 [File/Folder]
+
+search what is 's'?
+
+
+
+
+
+
+			*Software Distribution*
+
+
+
+=== Archives
+
+Compress-Archive -Path [Folder Path] [Path to compress and name.zip]
+
+
+=== Package Dependencies
+
+Find-Package [Package Name] -includeDependencies
+Find-Package sysinternals -includeDependencies
+
+Register-PackageSource -Name chocolatey -ProviderName chocolatey -Location https://chocolatey.org/package
+Get-PackageSource
+Find-Package [package] -includeDependencies
+Install-Package 
+
+Example:
+	Register-PackageSource -Name chocolatey -ProviderName chocolatey -Location https://chocolatey.org/api/v2
+	Get-PackageSource
+	Find-Package sysinternals -includeDependencies
+	Install-Package -Name sysinternals
+
+
+
+
+
+			*Package Manager*
+
+Windows:
+	Package Manager:
+		Chocolatey
+	Others Program:
+		SCCM
+		Puppet
+
+
+Install-Package -Name sysinternals
+Get-Package -name sysinternals
+uninstall-Package -Name sysinternals
+
+
+Linux:
+apt ---Advanced Packaging Tools
+
+source package
+cat /etc/apt/sources.list
+
+Personal Package Archive (PPA) is a software repository for uploading source packages to be built and published as an Advanced Packaging Tool (APT) repository by Launchpad.
+
+
+
+	
+			*Devices and Drivers*
+
+Driver ---Used to help our hardware devices interact with our OS.
+Win ---Device Manager
+
+
+Linux
+
+ls -l /dev
+
+Character Devices ---like a keyboard or a mouse, transmit data character by character   --c
+/dev/sdc
+Block Devices ---like USB drives,hard drives and CDROMs, transfer blocks of data: a data block is just a unit of data storage. --b
+/dev/sdb or /dev/sda
+
+
+
+Security Patch ---Software that's meant to fix up a security hole.
+Windows Update Client Service
+
+
+
+
+
+				*FileSystem*
+
+---Used to keep track of files and file storage on a disk
+
+Windows ---NTFS
+Linux ---ext4
+USB drive ---NTFS formatted (We can use that usb in both Linux & Windows)
+USB drive ---ext4 (can be use only Linux)
+USB drive ---FAT32 (can be use Linux, Windows & Mac)
+
+
+=== Disk Anatomy
+
+Partition ---The piece of a disk that you can manage.
+Partition Table ---Tells the OS how the disk is partitoned.
+
+Master Boot Record (MBR) ---2TB max volume size | Primary partitions
+   |     |     |     |
+  P1    P2    P3    P4  ---P= partition
+   |
+   Extended
+	| 
+	Logical
+
+
+GUID Partition Table (GPT) ---2TB or greater volume size | one type of partition | unlimited partitions
+
+cmd===
+
+Diskpart
+> list disk
+> select disk 1
+> clean
+> create partition primary
+> select partition 1
+> active
+> format FS=NTFS label=m-thumb-drive
+
+
+
+
+Linux
+
+sudo parted -l
+sudo parted [Path]
+sudo parted /dev/sdb
+
+(parted) print
+(parted) mklabel gpt
+(parted) print
+(parted) mkpart primary ext4 1MiB 5GiB
+(parted) mkpart [type] [FS] [Start] [End]
+(parted) quit
+
+sudo mkfs -t ext4 /dev/sdb1
+
+
+
+
+=== Mounting Unmounting FS
+
+Mounting ---Making something accessible to the computer,like a filesystem or a hard disk
+Unmounting ---Reverse or vice versa
+
+Linux 
+
+mount /dev/sdb /my_usb
+cd /my_usb
+
+umount /dev/sdb
+
+
+
+
+
+
+
+
+=== Swap
+
+Virtual Memory ---How our OS provides the physical memory available in our computer (like RAM) to the applications that run on the computer.
+
+To see pages in Windows:
+
+Control Panel >> System & Security >> System >> Advanced system Settings >> Advanced >> Settings >> Advanced >> Change
+
+
+Linux
+Swap Space ---In Linux, the dedicated area of the hard drive used for virtual memory.
+
+
+sudo parted /dev/sdb
+
+(parted) print
+(parted) mkpart primary linux-swap 5GiB 100% 
+(parted) print
+(parted) quit
+
+sudo mkswap /dev/sdb2
+sudo swapon /dev/sdb2
+
+
+
+
+=== Files
+
+Master File Table ---Windows use MFT to handle file data,file metadata, file system.
+
+
+NTFS(HDD/SSD)---- MFT ---- File1 File2 File3
+			     |     |     |
+			    MFT	  MFT   MFT
+			   Entry Entry Entry
+
+   MFT
+- File Name
+- Timestamp
+- Permissons
+- Compression
+- Location
+- Etc...
+
+When file is deleted File1 MFT Entry will be -Free
+
+
+
+Shortcut - Symbolic link
+Shortcut - Hard Link
+
+
+create a shortcut of any file. Say file1.txt has file1_shortcut.lnk
+
+cd [Dir]
+notepad.exe file1_shortcut.lnk
+mklink file1_symlink file1.txt
+mklink [Symbolic Link File Name] [File]
+notepad.exe [File]      ---now it will show the linked content.
+mklink /H [Hardlink Link File Name] [File]
+
+
+
+Linux
+In linux, an inode stores everything about a file, except for the filename and the file data.
+
+Softlink ----- File ----- HDD
+
+
+Hardlink ----- inode ----- inode table ----- HDD
+				     File-----|
+
+ls -l file.txt
+ln -s file.txt file_softlink
+ls -l
+ln file.txt file_hardlink
+ls -l file.txt  ---2 means one link
+
+
+
+
+=== Disk Usage
+
+cleanmgr.exe   ---for cleaning disk
+
+Disk Management >> Disk >> Properties >> Disk Cleanup
+
+
+(search) Defragment & Optimize Drives
+
+
+
+Linux
+
+du -h  ---disk utilise
+df -h 
+
+
+
+
+=== File System Repair
+
+Data Buffer ---A region of RAM that's used to temporarily store data while it's being moved around
+Data Corruption
+
+enable repair
+
+fsutil repair query C:
+chkdsk /F D:
+
+
+
+Linux
+
+sudo fsck /dev/sda ---before it run make sure device is unmounted
+
+
+
+
+
+
+
+
+			*Process*
+
+
+=== Process creation & Termination
+
+
+Windows - Parent Process to child process ask
+	- Child Process are application
+
+notepad.exe    ---Here parent process is powershell and child is notepad application
+
+
+ps ax
+taskkill /pid [PID]
+
+
+
+Linux
+when computer start, the kernel creates a process called init, which has a pid of 1
+
+
+
+
+=== Reading Process Information
+
+taskmgr.exe  ---Task Manager, Shortcut Ctrl-Shift-Esc
+
+PID can be found in Task Manager >> Details Tab
+
+tasklist    ---cmd
+Get-Process ---Powershell
+
+
+
+Linux
+
+ps -x
+STAT Filed --- R:running, T:stopped, S:interruptible sleep
+
+ps -ef ---e flag will show process of other users, f is for full processes
+UID  ---User ID, who launched the process
+PPID ---which launched the process
+C    ---number of children process has
+STime---Start time of the process
+TTY  ---Terminal associated with process
+
+ls -l /proc   ---process file
+cat /proc/[PID]/status
+
+
+
+
+
+
+=== Signals
+
+A way to tell a process that something's just happened
+SIGINT ---Signal Interrupt Ctrl-C
+
+
+
+
+
+
+=== Managing Processes
+
+Process Explorer ---A utility Microsoft created to let advanced professional user look at running processes.
+
+Download and install.
+search individual processes ---Ctrl F
+
+mui ---multilingual user interface
+
+
+Linux
+kill [PID]
+kill -KILL [PID] ---Sigkill 
+kill -TSTP [PID] ---Terminate the process/ suspend the process
+kill -CONT [PID] ---Continue the suspended process
+
+SIGTERM ---Signal of terminate
+SIGKILL ---Signal of kill
+SIGSTP	---Signal of stopping
+
+
+
+
+
+=== Resource Monitoring
+
+(search) Resource Monitor
+
+Get-Process
+NPM ---non paged memory, K is for Kilobytes
+
+Get-Process | Sort CPU -descending | Select -first 3 -Property ID,ProcessName,CPU
+
+
+Linux
+
+top
+uptime  ---currentTime, machineUpTime HH:MM, user, load average CPU load in intervals of 1,5,15 minutes
+lsof ---open file process
+
+
+ 
+
+
+
+
+
+			*Remote Connection*
+
+
+To have a remote connection we need:
+1. having a user with a pass in that computer
+2. knowing that computer's IP address
+
+
+
+putty.exe -ssh [username]@[hostIP] [port]   ---basically port 22
+
+For GUI, We can use Remote Desktop Protocol (RDP)
+Microsoft Terminal Services Client
+
+msctsc.exe    ---Used to create RDP connections to remote computers
+
+enable RDP-
+This PC >> Properties >> Remote Settings >> Allow remote connection >> Apply >> OK
+
+
+
+
+Linux
+
+ssh [username]@[hostIP]
+
+
+
+=== Remote Connection File Transfer
+
+PuTTY Secure Copy Client
+
+pscp.exe [File] [username]@[hostIP]:[Path to paste]
+
+Shared Folder
+net share ShareMe=[Folder] /grant:everyone,full
+
+
+
+
+SCP ---Secure Copy
+
+scp [File] [username]@[hostIP]:[Path to paste]
+
+
+
+
+
+=== Log
+
+eventvwr.msc
+
+create custom logs >> error >> time >> create
+
+
+
+Linux
+
+ls /var/log
+
+auth.log ---authorization and security-related events are logged here
+kern.log ---kernel message are logged here
+dmesg    ---system startup message are logged here.we can diagnose boot up issues
+syslog   ---all system log
+
+
+
+live log entry view:
+tail -f /var/log/syslog
+
+and now run the application.

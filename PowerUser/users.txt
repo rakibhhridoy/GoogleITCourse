@@ -1,0 +1,68 @@
+			*Users*
+
+
+=== Users, Administrator & Groups
+
+Standard User-- One who is given access to a machine but has restricted access to do things like install software or change certain settings.
+Administrator-- A user that has complete control over a machine.
+Groups       -- Parents Users & Child Users
+
+
+
+
+=== View User & Group Information
+
+--- Go to Computer Management
+User Access Control (UAC)-- A feature in Windows that prevents unauthorized changes to a system..
+
+
+Get-LocalUser
+Get-LocalGroup
+Get-LocalGroupMember Administrators
+
+
+Bash-
+
+Becoming Root:
+sudo su -
+cat /etc/sudoers/
+
+sudo:x:number:name  ---root user
+
+cat /etc/passwd/
+
+root:x:0:0:root:/root:/bin/bash
+
+
+
+
+=== Setting User Passwords
+
+net user [username] '[password]'
+net user [username] /logonpasswordchg:yes
+
+
+Bash--
+passwd [username]
+sudo passwd -e [username]   ---Make Password Expire
+
+
+
+=== Adding & Removing Users
+
+net user [username] * /add
+net user [username] /logonpasswordchg:yes
+net user [username] password /add /logonpasswordchg:yes
+
+
+net user [username] /del
+Remove-LocalUser [username]
+
+
+Bash--
+sudo useradd [username]
+sudo userdel [username]
+
+
+
+

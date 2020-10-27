@@ -1,0 +1,30 @@
+
+			*Regex*
+
+
+
+=== Searching Within Files
+
+--for manual way, see video week1
+
+Select-String [pattern] [File]
+Select-String [pattern] *.extension
+
+
+
+
+=== Searching Within Folders
+
+ls [File] -Recurse -Filter [pattern]
+
+
+Example:
+	ls C:\Program Files\bin\win\Release\ -Recurse -Filter *.exe
+
+
+
+
+
+
+
+

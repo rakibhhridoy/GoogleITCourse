@@ -1,0 +1,78 @@
+			*File Permission*
+
+
+=== File Permissions
+
+icacls [Folder\File]    ---F  = Full Control
+			---CI = Container Inherit
+			---OI = Object Inherit
+icacls /?               ---All Commands
+
+
+
+
+
+=== Modifying Permissions
+
+icacls [Folder\File] /grant '[userType]:(OI)(CI)(R)'   ---userType = Everyone | Specific User
+Example:	
+	icacls [Folder\File] /grant 'Authentication Users:(OI)(CI)(R)'
+
+
+icacls [Folder\File] /remove userType 
+Example:
+	icacls [Folder\File] /remove Everyone
+
+
+
+Bash--
+
+u--user
+g--group
+o--other
+
+chmod u+x  [File]
+chmod u-x  [File]
+chmod u+rx [File]
+chmod ugo+r [File]
+
+
+The numerical equivalent of rwx is:
+- 4 for read or r
+- 2 for write or w
+- 1 for execute or x
+
+
+chmod 754 [File]
+-rwxr-xr--
+
+rwx ---user
+r-x ---group
+r-- ---others
+
+change owner--
+sudo chown [username] [File]
+sudo chgrp [groupname] [File]
+
+
+
+
+=== Special Permissions
+
+-- file >> Properties >> Advance
+
+--Bash 
+
+chmod u+s  [File/Folder]
+chmod 4755 [File/Folder]
+chmod 2755 [File/Folder]
+chmod 1755 [File/Folder]
+
+search what is 's'?
+
+
+
+
+
+
+

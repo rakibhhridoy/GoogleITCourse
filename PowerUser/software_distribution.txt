@@ -1,0 +1,30 @@
+
+			*Software Distribution*
+
+
+
+=== Archives
+
+Compress-Archive -Path [Folder Path] [Path to compress and name.zip]
+
+
+=== Package Dependencies
+
+Find-Package [Package Name] -includeDependencies
+Find-Package sysinternals -includeDependencies
+
+Register-PackageSource -Name chocolatey -ProviderName chocolatey -Location https://chocolatey.org/package
+Get-PackageSource
+Find-Package [package] -includeDependencies
+Install-Package 
+
+Example:
+	Register-PackageSource -Name chocolatey -ProviderName chocolatey -Location https://chocolatey.org/api/v2
+	Get-PackageSource
+	Find-Package sysinternals -includeDependencies
+	Install-Package -Name sysinternals
+
+
+
+
+

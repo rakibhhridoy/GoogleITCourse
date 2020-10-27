@@ -1,0 +1,115 @@
+=== Navigation
+
+pwd
+cd [Dir]
+cd .. 
+cd ..\[Previous Dir]
+cd ~
+
+
+
+
+=== Make Dir
+
+mkdir [New Dir Name]-- Shouldn't consist space.. 
+--Example
+	mkdir my_new_folder
+
+
+--if want space
+	mkdir 'my new folder'
+	mkdir my` new` folder
+
+
+
+
+
+=== Command History
+
+history
+
+-- Previous command
+#Tab
+
+clear
+
+
+
+
+
+
+=== Copying File & Dir
+
+cp [File] [Path to paste]
+cp *.extension [Path to paste]
+cp [Folder] [Path to paste] -Recursive -Verbose>(Optional)
+
+
+
+
+=== Moving & Renaming Files, Dir
+
+mv [File] [Path to move]
+mv *.extension [Folder Path to move]
+mv [File] [New Name]
+
+
+
+
+=== Removing Files & Directories
+
+rm / remove
+
+rm [File] -Force
+rm [Folder] -Recurse
+remove [File] -Force
+
+
+
+
+
+=== Display File Contents
+
+cat [File]
+more [File]
+cat [File] -Head n      {n- any number}
+cat [File] -Tail n
+
+
+In BASH-
+less [File] /pattern_to_match
+less [File] g ----moves to the begining of file
+less [File] G ----moves to the end of file
+less [File] q ----for quit
+
+
+
+
+=== Modifying Text Files
+
+start notepad++ [File]
+
+
+
+
+
+=== Some Advanced Commands
+
+ls		    ---for listing file
+Get-Help  [Command] ---Get Help
+Get-Alias [alias]   ---To see aliases
+Get-Alias ls        ---ls = Get-ChildItem
+Get-ChildItem [Folder]  
+
+
+Get-ChildItem [Folder] in cmd is `dir [Folder]`
+
+Get-Help used in PowerShell
+/? used in cmd
+
+	
+			
+
+
+
+

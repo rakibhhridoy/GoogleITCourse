@@ -1,0 +1,112 @@
+			*Process*
+
+
+=== Process creation & Termination
+
+
+Windows - Parent Process to child process ask
+	- Child Process are application
+
+notepad.exe    ---Here parent process is powershell and child is notepad application
+
+
+ps ax
+taskkill /pid [PID]
+
+
+
+Linux
+when computer start, the kernel creates a process called init, which has a pid of 1
+
+
+
+
+=== Reading Process Information
+
+taskmgr.exe  ---Task Manager, Shortcut Ctrl-Shift-Esc
+
+PID can be found in Task Manager >> Details Tab
+
+tasklist    ---cmd
+Get-Process ---Powershell
+
+
+
+Linux
+
+ps -x
+STAT Filed --- R:running, T:stopped, S:interruptible sleep
+
+ps -ef ---e flag will show process of other users, f is for full processes
+UID  ---User ID, who launched the process
+PPID ---which launched the process
+C    ---number of children process has
+STime---Start time of the process
+TTY  ---Terminal associated with process
+
+ls -l /proc   ---process file
+cat /proc/[PID]/status
+
+
+
+
+
+
+=== Signals
+
+A way to tell a process that something's just happened
+SIGINT ---Signal Interrupt Ctrl-C
+
+
+
+
+
+
+=== Managing Processes
+
+Process Explorer ---A utility Microsoft created to let advanced professional user look at running processes.
+
+Download and install.
+search individual processes ---Ctrl F
+
+mui ---multilingual user interface
+
+
+Linux
+kill [PID]
+kill -KILL [PID] ---Sigkill 
+kill -TSTP [PID] ---Terminate the process/ suspend the process
+kill -CONT [PID] ---Continue the suspended process
+
+SIGTERM ---Signal of terminate
+SIGKILL ---Signal of kill
+SIGSTP	---Signal of stopping
+
+
+
+
+
+=== Resource Monitoring
+
+(search) Resource Monitor
+
+Get-Process
+NPM ---non paged memory, K is for Kilobytes
+
+Get-Process | Sort CPU -descending | Select -first 3 -Property ID,ProcessName,CPU
+
+
+Linux
+
+top
+uptime  ---currentTime, machineUpTime HH:MM, user, load average CPU load in intervals of 1,5,15 minutes
+lsof ---open file process
+
+
+ 
+
+
+
+
+
+

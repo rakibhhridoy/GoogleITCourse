@@ -1,0 +1,201 @@
+				*FileSystem*
+
+---Used to keep track of files and file storage on a disk
+
+Windows ---NTFS
+Linux ---ext4
+USB drive ---NTFS formatted (We can use that usb in both Linux & Windows)
+USB drive ---ext4 (can be use only Linux)
+USB drive ---FAT32 (can be use Linux, Windows & Mac)
+
+
+=== Disk Anatomy
+
+Partition ---The piece of a disk that you can manage.
+Partition Table ---Tells the OS how the disk is partitoned.
+
+Master Boot Record (MBR) ---2TB max volume size | Primary partitions
+   |     |     |     |
+  P1    P2    P3    P4  ---P= partition
+   |
+   Extended
+	| 
+	Logical
+
+
+GUID Partition Table (GPT) ---2TB or greater volume size | one type of partition | unlimited partitions
+
+cmd===
+
+Diskpart
+> list disk
+> select disk 1
+> clean
+> create partition primary
+> select partition 1
+> active
+> format FS=NTFS label=m-thumb-drive
+
+
+
+
+Linux
+
+sudo parted -l
+sudo parted [Path]
+sudo parted /dev/sdb
+
+(parted) print
+(parted) mklabel gpt
+(parted) print
+(parted) mkpart primary ext4 1MiB 5GiB
+(parted) mkpart [type] [FS] [Start] [End]
+(parted) quit
+
+sudo mkfs -t ext4 /dev/sdb1
+
+
+
+
+=== Mounting Unmounting FS
+
+Mounting ---Making something accessible to the computer,like a filesystem or a hard disk
+Unmounting ---Reverse or vice versa
+
+Linux 
+
+mount /dev/sdb /my_usb
+cd /my_usb
+
+umount /dev/sdb
+
+
+
+
+
+
+
+
+=== Swap
+
+Virtual Memory ---How our OS provides the physical memory available in our computer (like RAM) to the applications that run on the computer.
+
+To see pages in Windows:
+
+Control Panel >> System & Security >> System >> Advanced system Settings >> Advanced >> Settings >> Advanced >> Change
+
+
+Linux
+Swap Space ---In Linux, the dedicated area of the hard drive used for virtual memory.
+
+
+sudo parted /dev/sdb
+
+(parted) print
+(parted) mkpart primary linux-swap 5GiB 100% 
+(parted) print
+(parted) quit
+
+sudo mkswap /dev/sdb2
+sudo swapon /dev/sdb2
+
+
+
+
+=== Files
+
+Master File Table ---Windows use MFT to handle file data,file metadata, file system.
+
+
+NTFS(HDD/SSD)---- MFT ---- File1 File2 File3
+			     |     |     |
+			    MFT	  MFT   MFT
+			   Entry Entry Entry
+
+   MFT
+- File Name
+- Timestamp
+- Permissons
+- Compression
+- Location
+- Etc...
+
+When file is deleted File1 MFT Entry will be -Free
+
+
+
+Shortcut - Symbolic link
+Shortcut - Hard Link
+
+
+create a shortcut of any file. Say file1.txt has file1_shortcut.lnk
+
+cd [Dir]
+notepad.exe file1_shortcut.lnk
+mklink file1_symlink file1.txt
+mklink [Symbolic Link File Name] [File]
+notepad.exe [File]      ---now it will show the linked content.
+mklink /H [Hardlink Link File Name] [File]
+
+
+
+Linux
+In linux, an inode stores everything about a file, except for the filename and the file data.
+
+Softlink ----- File ----- HDD
+
+
+Hardlink ----- inode ----- inode table ----- HDD
+				     File-----|
+
+ls -l file.txt
+ln -s file.txt file_softlink
+ls -l
+ln file.txt file_hardlink
+ls -l file.txt  ---2 means one link
+
+
+
+
+=== Disk Usage
+
+cleanmgr.exe   ---for cleaning disk
+
+Disk Management >> Disk >> Properties >> Disk Cleanup
+
+
+(search) Defragment & Optimize Drives
+
+
+
+Linux
+
+du -h  ---disk utilise
+df -h 
+
+
+
+
+=== File System Repair
+
+Data Buffer ---A region of RAM that's used to temporarily store data while it's being moved around
+Data Corruption
+
+enable repair
+
+fsutil repair query C:
+chkdsk /F D:
+
+
+
+Linux
+
+sudo fsck /dev/sda ---before it run make sure device is unmounted
+
+
+
+
+
+
+
+

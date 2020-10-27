@@ -1,0 +1,46 @@
+			*Remote Connection*
+
+
+To have a remote connection we need:
+1. having a user with a pass in that computer
+2. knowing that computer's IP address
+
+
+
+putty.exe -ssh [username]@[hostIP] [port]   ---basically port 22
+
+For GUI, We can use Remote Desktop Protocol (RDP)
+Microsoft Terminal Services Client
+
+msctsc.exe    ---Used to create RDP connections to remote computers
+
+enable RDP-
+This PC >> Properties >> Remote Settings >> Allow remote connection >> Apply >> OK
+
+
+
+
+Linux
+
+ssh [username]@[hostIP]
+
+
+
+=== Remote Connection File Transfer
+
+PuTTY Secure Copy Client
+
+pscp.exe [File] [username]@[hostIP]:[Path to paste]
+
+Shared Folder
+net share ShareMe=[Folder] /grant:everyone,full
+
+
+
+
+SCP ---Secure Copy
+
+scp [File] [username]@[hostIP]:[Path to paste]
+
+
+
